@@ -12,7 +12,8 @@ app.use(express.static(__dirname, 'dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.get('/*',express.static(__dirname, 'dist'));
+app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/*', express.static(path.join(__dirname, 'dist')));
 
 var server = http.createServer(app);
 
