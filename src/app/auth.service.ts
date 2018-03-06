@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class AuthService {
 
-  constructor() { }
+  constructor(private http: Http) { }
 
-  getUserDetails(username,password){
+  getUserDetails(username, password) {
     //Post user details to api server
-  console.log('getUserDetails',username,password);
+    console.log('getUserDetails', username, password);
+
+    return this.http.post('http://localhost:5000/getUserDetails',{
+      username,
+      password
+    });
   }
 
 }

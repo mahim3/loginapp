@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -24,7 +25,12 @@ export class LoginComponent implements OnInit {
     console.log('username', username);
     console.log('password', password);
 
-    this.auth.getUserDetails(username,password);
+    this.auth.getUserDetails(username,password).
+    subscribe(data =>{
+      if(data.status == 200){
+        this.router.navigate(['/admin']);
+      }
+    });
   }
 
 }

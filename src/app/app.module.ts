@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth.service';
+import { HttpModule } from '@angular/http';
+import { AuthGuard } from './auth.guard';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { AuthService } from './auth.service';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     RouterModule.forRoot([
       {
         path:'', component:HomeComponent
@@ -28,12 +31,13 @@ import { AuthService } from './auth.service';
         path:'login', component:LoginComponent
       },
       {
-        path:'admin', component:AdminComponent
+        path:'admin',canActivate:[AuthGuard] ,component:AdminComponent, 
+        
       },
 
     ])
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
