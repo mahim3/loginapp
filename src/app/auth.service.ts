@@ -14,6 +14,14 @@ export class AuthService {
       username,
       password
     });
+
+  }
+
+  logout(){
+    console.log('from logout');
+
+    return this.http.get('http://localhost:5000/logout');
+
   }
 
 }

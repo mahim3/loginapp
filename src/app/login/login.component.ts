@@ -28,9 +28,14 @@ export class LoginComponent implements OnInit {
     this.auth.getUserDetails(username,password).
     subscribe(data =>{
       if(data.status == 200){
+        console.log(data);
         this.router.navigate(['/admin']);
+      }else{
+        alert('invalid data');
       }
+
     });
   }
+ 
 
 }
