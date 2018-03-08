@@ -64,22 +64,28 @@ app.post('/getUserDetails', loginvalid, function (req, res) {
 		delete userWithoutPw.pw;
 		req.session.user = userWithoutPw;
 
-		console.log(req.session.user);
+		console.log('req sessin user', req.session.user);
 
 		res.status(200).send({
 			user: userWithoutPw
 		});
 	}else{
-		res.status(403).send({
+		res.status(203).send({
 			errorMsg:'Permission denied'
 		})
 	}
 
 })
 
-app.get('/logout', (req,res)=>{
+app.get('/login', function(req, res){
+	console.log("login hitted");
+	req.session.user ? res.status(200).send({loggedIn: true}) : res.status(203).send({loggedIn: false});
+})
+
+app.get('/logout', function(req,res){
 	req.session.destroy((err)=>{
-		if(erq){
+		console.log('logout hitted');
+		if(err){
 			res.status(500).send({error:'could not logout'});
 		}else{
 			res.status(200).send({status:'logout success'});
