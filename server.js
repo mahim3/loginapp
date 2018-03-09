@@ -45,19 +45,21 @@ app.listen(5000, () => {
 
 // })
 
-const loginvalid = (req, res, next) => {
-	if (req.body) {
-		next();
-	} else {
-		res.status(403).send({ errorMsg: 'need to login' });
-	}
-}
+// const loginvalid = (req, res, next) => {
+// 	if (req.body) {
+// 		next();
+// 	} else {
+// 		res.status(403).send({ errorMsg: 'need to login' });
+// 	}
+// }
+
+
 const appUser = {
 	name: 'admin',
 	pw: 'admin'
 }
 
-app.post('/getUserDetails', loginvalid, function (req, res) {
+app.post('/getUserDetails', function (req, res) {
 	const user = appUser;
 	if (user && user.pw == req.body.password) {
 		const userWithoutPw = { ...user };
@@ -77,14 +79,15 @@ app.post('/getUserDetails', loginvalid, function (req, res) {
 
 })
 
-app.get('/login', function(req, res){
+app.post('/login', function(req, res){
 	console.log("login hitted");
-	req.session.user ? res.status(200).send({loggedIn: true}) : res.status(203).send({loggedIn: false});
+	req.session.user ? res.status(200).send({loggedIn: true}).json : res.status(203).send({loggedIn: false}).json;
 })
 
-app.get('/logout', function(req,res){
+app.post('/logout', function(req,res){
+	console.log('logout hitted');
+
 	req.session.destroy((err)=>{
-		console.log('logout hitted');
 		if(err){
 			res.status(500).send({error:'could not logout'});
 		}else{
@@ -92,3 +95,5 @@ app.get('/logout', function(req,res){
 		}
 	})
 })
+
+

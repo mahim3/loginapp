@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   getlogin(){
-    this.http.get('http://localhost:5000/login').subscribe( data=>{
+    this.http.post('http://localhost:5000/login',{}).subscribe( data=>{
       console.log('getlogin data');
       console.log(data);
 
@@ -29,7 +29,6 @@ export class AuthService {
       this.setLoggedIn(true);
       }else{
         this.setLoggedIn(false);
-        this.router.navigate(['/']);
       }
 
     })
@@ -49,7 +48,7 @@ export class AuthService {
   logout(){
     console.log('from logout');
 
-    return this.http.get('http://localhost:5000/logout');
+    return this.http.post('http://localhost:5000/logout',{});
 
   }
 
